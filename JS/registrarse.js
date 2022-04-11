@@ -1,5 +1,6 @@
 const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formulario input');
+let boton_enviar = document.querySelectorAll('#enviar');
 
 const expresiones ={
     usuario: /^[a-zA-Z0-9]{4,10}$/,
@@ -225,7 +226,6 @@ inputs.forEach((input) => {
 });
 
 formulario.addEventListener('submit', (e) => {
-    e.preventDefault();
     
     const terminos = document.getElementById('terminos');
 
@@ -246,15 +246,7 @@ formulario.addEventListener('submit', (e) => {
         setTimeout(() => {
             window.location.replace("");
         }, 1200);
-        let usuario = $('#usuario').val();
-        let apellido = $('#apellido').val();
-        let correo = $('#correo').val();
-        let password = $('#password').val();
-        funcion='crear_usuario';
-        $.post('../Controlador/UsuarioController.php',{usuario,apellido,correo,password,funcion},(response)=>{
-            console.log(response);
-        });
-            e.preventDefault();
+            
 
     }else if(!Usuario.usuario && Usuario.correo2 && Usuario.correo && Usuario.password && Usuario.password2 && terminos.checked){
         validarUsuario();
@@ -283,4 +275,24 @@ formulario.addEventListener('submit', (e) => {
         document.getElementById('mensaje-error').classList.add('mensaje-error-activo');
     }
 });
+
+document.getElementById('formulario').addEventListener('submit', function(e){
+e.preventDefault();
+let formulario = new FormData(document.getElementById('formulario'));
+    fetch('../Controlador/Usuario.php',{
+        method: 'POST',
+        body: formulario
+    })
+    .then(res => res.json())
+    .then(data =>{
+        if(data == 'true'){
+            alert('El usuario se inserto correctamente');
+        }
+        else{
+            console.log(data);
+        }
+    })
+
+});
+
 

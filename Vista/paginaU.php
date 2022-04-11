@@ -19,6 +19,6 @@ if($_SESSION['us_tipo'] ==2){
 <?php
 }
 else{
-	header('Location: ../Vista/login.php');
+	header('Location: ../login.php');
 }
 ?>

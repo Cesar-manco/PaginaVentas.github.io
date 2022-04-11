@@ -9,26 +9,26 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="../Css/login.css">
-		<link rel="stylesheet" type="text/css" href="../Css/css/all.min.css">
+		<link rel="stylesheet" type="text/css" href="Css/login.css">
+		<link rel="stylesheet" type="text/css" href="Css/css/all.min.css">
 	</head>
 	<?php
 	session_start();
 	if(!empty($_SESSION['us_tipo'])){
-		header('Location: ../Controlador/LoginControlador.php');
+		header('Location: Controlador/LoginControlador.php');
 	}
 	else{
 		session_destroy();
 	?>
 	<body>
-		<img class="wave"src="../img/wave.png" alt="">
+		<img class="wave"src="img/wave.png" alt="">
 		<div class="contenedor">
 			<div class="img">
-				<img src="../img/login.svg" alt="">
+				<img src="img/login.svg" alt="">
 			</div>
 			<div class="contenido-login">
-				<form action="../Controlador/LoginControlador.php" method="post">
-					<img class="img-venta" src="../img/icon.png" alt="">
+				<form action="Controlador/LoginControlador.php" method="post">
+					<img class="img-venta" src="img/icon.png" alt="">
 					<h2>Venta Utiles escolares</h2>
 					<div class="input-div dni">
 						<div class="i">
@@ -48,13 +48,13 @@
 							<input type="password" name="pass" class="input">
 						</div>
 					</div>
-					<a href="../Vista/registrarse.php">No tengo Cuenta</a>
+					<a href="Vista/registrarse.php">No tengo Cuenta</a>
 					<input type="submit"class="btn" value="Iniciar Sesion">
 				</form>
 			</div>
 		</div>
 </body>
-<script src="../JS/login.js"></script>
+<script src="JS/login.js"></script>
 </html>
 <?php
 }
