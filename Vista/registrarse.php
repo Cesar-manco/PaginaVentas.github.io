@@ -104,7 +104,7 @@
     
                 <!--Boton-->
                 <div class="contenedor-form contenedor-btn-registrar">
-                    <button type="submit" class="btn-registrar" name="registrar">Registrarse</button>
+                    <button type="submit" class="btn-registrar" name="registrar" id="enviar">Registrarse</button>
                 </div>
 
                 <!--Ya tienes cuenta?-->

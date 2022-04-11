@@ -12,11 +12,32 @@ class Usuario{
 		$this->objetos = $query->fetchall();
 		return $this->objetos;
 	}
-	function crear($usuario,$password,$correo,$apellido,$tipo){
-		$sql="INSERT INTO usuario(nom_user,password,email,apellido_us,us_tipo) VALUES(:nom_user,:password,:email,:apellido_us,:us_tipo)";
+	function obtener_datos($id){
+		$sql="SELECT * FROM usuario join tipo_us on us_tipo=id_tipo_us and id_user=:id";
 		$query = $this->acceso->prepare($sql);
-		$query->execute(array(':nom_user' =>$usuario,':password' =>$password,':email' =>$correo,':apellido_us' =>$apellido,':us_tipo' =>$tipo));
-		echo 'add';
+		$query->execute(array(':id'=>$id));
+		$this->objetos = $query->fetchall();
+		return $this->objetos;
+	}
+	function editar($id_usuario,$telefono,$residencia,$correo,$sexo,$adicional){
+		$sql="UPDATE usuario SET telefono_user=:telefono,residencia_user=:residencia,email=:correo,sexo_user=:sexo,adicional_user=:adicional where id_user=:id";
+		$query = $this->acceso->prepare($sql);
+		$query->execute(array(':id'=>$id_usuario,':telefono'=>$telefono,':residencia'=>$residencia,':correo'=>$correo,':sexo'=>$sexo,':adicional'=>$adicional));
+	}
+	function cambiar_contra($id_usuario,$oldpass,$newpass){
+		$sql="SELECT * FROM usuario where id_user=:id and pass_user=:oldpass";
+		$query = $this->acceso->prepare($sql);
+		$query->execute(array(':id'=>$id_usuario,':oldpass'=>$oldpass));
+		$this->objetos = $query->fetchall();
+		if(!empty($this->objetos)){
+			$sql="UPDATE usuario SET pass_user=:newpass WHERE id_user=:id";
+			$query=$this->acceso->prepare($sql);
+			$query->execute(array(':id'=>$id_usuario, ':newpass'=>$newpass));
+			echo 'update';
+		}
+		else{
+			echo 'no update';
+		}
 	}
 }
 

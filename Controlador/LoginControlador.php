@@ -1,5 +1,5 @@
 <?php
-include_once'../Modelo/Usuario.php';
+include_once '../Modelo/Usuario.php';
 session_start();
 $user = $_POST['user'];
 $pass = $_POST['pass'];
@@ -38,7 +38,7 @@ else{
 			break;
 	}
 }elseif (!$nom_user && !$id_user) {
-	header('Location: ../Vista/login.php');
+	header('Location: ../login.php');
 }
 }
 

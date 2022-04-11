@@ -62,6 +62,6 @@ if($_SESSION['us_tipo'] ==1){
 include_once 'Layouts/footer.php';
 }
 else{
-	header('Location: ../Vista/login.php');
+	header('Location: ../login.php');
 }
 ?>
