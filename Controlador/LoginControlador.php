@@ -16,6 +16,9 @@ if(!empty($_SESSION['us_tipo'])){
 		case 2:
 			header('Location: ../Vista/paginaU.php');
 			break;
+		case 3:
+			header('Location: ../Vista/admin.php');
+			break;
 		}
 
 }
@@ -35,6 +38,9 @@ else{
 		
 		case 2:
 			header('Location: ../Vista/paginaU.php');
+			break;
+		case 3:
+			header('Location: ../Vista/admin.php');
 			break;
 	}
 }elseif (!$nom_user && !$id_user) {
