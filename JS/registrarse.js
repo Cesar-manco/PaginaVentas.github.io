@@ -276,23 +276,5 @@ formulario.addEventListener('submit', (e) => {
     }
 });
 
-document.getElementById('formulario').addEventListener('submit', function(e){
-e.preventDefault();
-let formulario = new FormData(document.getElementById('formulario'));
-    fetch('../Controlador/Usuario.php',{
-        method: 'POST',
-        body: formulario
-    })
-    .then(res => res.json())
-    .then(data =>{
-        if(data == 'true'){
-            alert('El usuario se inserto correctamente');
-        }
-        else{
-            console.log(data);
-        }
-    })
-
-});
 
 
