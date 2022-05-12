@@ -57,4 +57,16 @@ if($_POST['funcion']=='borrar'){
     $id=$_POST['id'];
     $empresa->borrar($id);
 }
+if($_POST['funcion']=='rellenar_empresas'){
+    $empresa->rellenar_Empresas();
+    $json= array();
+    foreach($empresa->objetos as $objeto){
+        $json[]=array(
+            'id'=>$objeto->id_empresa,
+            'nombre'=>$objeto->nombre
+        );
+    }
+    $jsonstring=json_encode($json);
+    echo $jsonstring;
+}
 ?>

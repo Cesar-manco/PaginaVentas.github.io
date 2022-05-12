@@ -6,10 +6,10 @@ $(document).ready(function(){
         let nombre_empresa = $('#nombre-empresa').val();
         let id_editado = $('#id_editar_emp').val();
         if(edit==false){
-            funcion='crear';
+            funcion="crear";
         }
         else{
-            funcion='editar';
+            funcion="editar";
         }
         $.post('../Controlador/EmpresaController.php',{nombre_empresa,id_editado,funcion},(response)=>{
             if(response== 'add'){

@@ -5,6 +5,8 @@
   <link rel="stylesheet" href="../Css/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../Css/adminlte.min.css">
+  <!-- Select2 style -->
+  <link rel="stylesheet" href="../Css/select2.css">
   <!-- sweetalert style -->
   <link rel="stylesheet" href="../Css/sweetalert2.css">
 </head>
@@ -98,6 +100,14 @@
               <i class="nav-icon fas fa-vials"></i>
               <p>
                 Gestion atributo
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="adm_producto.php" class="nav-link">
+              <i class="nav-icon fas fa-chart-line"></i>
+              <p>
+                Gestion Producto
               </p>
             </a>
           </li>
