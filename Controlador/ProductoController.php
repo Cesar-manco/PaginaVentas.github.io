@@ -27,13 +27,17 @@ if($_POST['funcion']=='buscar'){
     $producto->buscar();
     $json=array();
     foreach($producto->objetos as $objeto){
+        $producto->obtener_stock($objeto->id_product);
+        foreach($producto->objetos as $obj){
+            $total = $obj->total;
+        }
         $json[]=array(
             'id'=>$objeto->id_product,
             'nombre'=>$objeto->nombre,
             'concentracion'=>$objeto->concentracion,
             'adicional'=>$objeto->adicional,
             'precio'=>$objeto->precio,
-            'stock'=>'stock',
+            'stock'=>$total,
             'empresa'=>$objeto->empresa,
             'tipo'=>$objeto->tipo,
             'presentacion'=>$objeto->presentacion,
@@ -74,5 +78,55 @@ if($_POST['funcion']=='cambiar_avatar'){
         $jsonstring = json_encode($json[0]);
         echo $jsonstring;
     }
+}
+if($_POST['funcion']=='borrar'){
+    $id=$_POST['id'];
+    $producto ->borrar($id);
+}
+if($_POST['funcion']=='buscar_id'){
+    $id=$_POST['id_producto'];
+    $producto->buscar_id($id);
+    $json=array();
+    foreach($producto->objetos as $objeto){
+        $producto->obtener_stock($objeto->id_product);
+        foreach($producto->objetos as $obj){
+            $total = $obj->total;
+        }
+        $json[]=array(
+            'id'=>$objeto->id_product,
+            'nombre'=>$objeto->nombre,
+            'concentracion'=>$objeto->concentracion,
+            'adicional'=>$objeto->adicional,
+            'precio'=>$objeto->precio,
+            'stock'=>$total,
+            'empresa'=>$objeto->empresa,
+            'tipo'=>$objeto->tipo,
+            'presentacion'=>$objeto->presentacion,
+            'empresaid'=>$objeto->prod_emp,
+            'tipo_id'=>$objeto->prod_tip_prod,
+            'presentacion_id'=>$objeto->prod_present,
+            'avatar'=>'../img/prod/'.$objeto->avatar
+
+        );
+    }
+    $jsonString = json_encode($json[0]);
+    echo $jsonString;
+}
+if($_POST['funcion']=='verificar_stock'){
+    $error=0;
+    $productos=json_decode($_POST['productos']);
+    foreach($productos as $objeto){
+        $producto->obtener_stock($objeto->id);
+        foreach ($producto->objetos as $obj) {
+            $total=$obj->total;
+        }
+        if($total>=$objeto->cantidad && $objeto->cantidad>0){
+            $error=$error+0;
+        }
+        else{
+            $error=$error+1;
+        }
+    }
+    echo $error;
 }
 ?>

@@ -7,6 +7,43 @@ if($_SESSION['us_tipo'] ==1 || $_SESSION['us_tipo'] ==3){
 <?php 
 	include_once 'Layouts/nav.php';
 ?>
+<div class="modal fade" id="crearlote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="card card-success">
+        <div class="card-header">
+          <h3 class="card-title">Crear lote</h3>
+          <button data-dismiss="modal" aria-label="close" class="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="card-body">
+        <div class="alert alert-success text-center" id="add-lote" style='display:none;'>
+            <span><i class="fas fa-check m-1"></i>Se Agregó Correctamente</span>
+        </div>
+          <form id="form-crear-lote">
+          <div class="form-group">
+              <label for="nombre_producto_lote">Producto:</label>
+              <label id="nombre_producto_lote">Nombre de producto</label>
+            </div>
+          <div class="form-group">
+              <label for="proveedor">Proveedor: </label>
+              <select name="proveedor" id="proveedor" class="form-control select2" style="width:100%"></select>
+            </div>
+            <div class="form-group">
+              <label for="stock">Stock:</label>
+              <input id="stock" type="number" class="form-control" placeholder="Ingrese stock">
+            </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn bg-gradient-primary float-right m-1">Guardar</button>
+          <button type="button" data-dismiss="modal"class="btn btn-outline-secondary float-right m-1">Close</button>
+        </div>
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>
 <!---------------- CAMBIAR AVATAR ------------->
 <div class="modal fade" id="cambiologo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -47,6 +84,7 @@ if($_SESSION['us_tipo'] ==1 || $_SESSION['us_tipo'] ==3){
     </div>
   </div>
 </div>
+<!--Crear Producto-->
 <div class="modal fade" id="crearproducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -65,7 +103,7 @@ if($_SESSION['us_tipo'] ==1 || $_SESSION['us_tipo'] ==3){
             <span><i class="fas fa-times m-1"></i>El Producto ya existe</span>
         </div>
         <div class="alert alert-success text-center" id="edit_prod" style='display:none;'>
-            <span><i class="fas fa-times m-1"></i>Se edito</span>
+            <span><i class="fas fa-check m-1"></i>Se edito</span>
         </div>
           <form id="form-crear-producto">
             <div class="form-group">

@@ -147,7 +147,7 @@ $(document).ready(function(){
                     if(response=='borrado'){
                         swalWithBootstrapButtons.fire(
                             'Borrado',
-                            'El laboratorio '+nombre+' fue borrado :)',
+                            'La Empresa '+nombre+' fue borrado :)',
                             'success'
                             )
                             buscar_Emp();
@@ -155,7 +155,7 @@ $(document).ready(function(){
                     else{
                         swalWithBootstrapButtons.fire(
                             'No se pudo Borrar',
-                            'El laboratorio '+nombre+'no fue borrado :)',
+                            'La Empresa '+nombre+'no fue borrado :)',
                             'error'
                             )
                             
@@ -165,7 +165,7 @@ $(document).ready(function(){
             } else if (result.dismiss === Swal.DismissReason.cancel ) {
                 swalWithBootstrapButtons.fire(
                 'Cancelado',
-                'El laboratorio '+nombre+' no fue borrado :)',
+                'La Empresa '+nombre+' no fue borrado :)',
                 'error'
                 )
             }

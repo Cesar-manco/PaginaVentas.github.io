@@ -6,8 +6,21 @@ $(document).ready(function(){
     rellenar_tipos();
     rellenar_presentaciones();
     buscar_producto();
-
-    function rellenar_Empresas(){
+    rellenar_proveedores();
+  function rellenar_proveedores(){
+      funcion ="rellenar_proveedores";
+      $.post('../Controlador/ProveedorController.php',{funcion},(response)=>{
+          const proveedores = JSON.parse(response);
+          let template='';
+          proveedores.forEach(proveedor => {
+              template+=`
+                  <option value="${proveedor.id}">${proveedor.nombre}</option>
+              `;
+          });
+          $('#proveedor').html(template);
+      })
+  }
+  function rellenar_Empresas(){
         funcion ="rellenar_empresas";
         $.post('../Controlador/EmpresaController.php',{funcion},(response)=>{
             const empresas = JSON.parse(response);
@@ -77,12 +90,19 @@ $(document).ready(function(){
                 $('#form-crear-producto').trigger('reset'); 
                 buscar_producto();
             }
-            else{
+            if(response=='noadd'){
               $('#noadd').hide('slow');
                 $('#noadd').show(1000);
                 $('#noadd').hide(3000);
                 $('#form-crear-producto').trigger('reset');
             }
+            if(response=='noedit'){
+                $('#noadd').hide('slow');
+                $('#noadd').show(1000);
+                $('#noadd').hide(3000);
+                $('#form-crear-producto').trigger('reset');
+            }
+            edit=false;
         });
         e.preventDefault();
     });
@@ -124,7 +144,7 @@ $(document).ready(function(){
                       <button class="editar btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#crearproducto">
                         <i class="fas fa-pencil-alt"></i>
                       </button>
-                      <button class="lote btn btn-sm btn-primary">
+                      <button class="lote btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#crearlote">
                         <i class="fas fa-plus-square"></i>
                       </button>
                       <button class="borrar btn btn-sm btn-danger">
@@ -156,17 +176,24 @@ $(document).ready(function(){
         const nombre=$(elemento).attr('prodNombre');
         $('#funcion').val(funcion);
         $('#id_logo_prod').val(id);
-        $('#avatar').val(avatar);
         $('#logoactual').attr('src',avatar);
         $('#nombre_logo').html(nombre);
+        $('#avatar').val(avatar);
     });
+    $(document).on('click','.lote',(e)=>{
+      const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
+      const id = $(elemento).attr('prodId');
+      const nombre=$(elemento).attr('prodNombre');
+      $('#id_lote_prod').val(id);
+      $('#nombre_producto_lote').html(nombre);
+  });
     $('#form-logo').submit(e=>{
       let formData = new FormData($('#form-logo')[0]);
       $.ajax({
         url: '../Controlador/ProductoController.php',
         type: 'POST',
         data:formData,
-        cahe:false,
+        cache:false,
         processData:false,
         contentType:false
       }).done(function(response){
@@ -207,6 +234,76 @@ $(document).ready(function(){
       $('#empresa').val(empresa).trigger('change');
       $('#tipo').val(tipo).trigger('change');
       $('#presentacion').val(presentacion).trigger('change');
+      console.log(empresa);
       edit = true;
   });
+  $(document).on('click','.borrar',(e)=>{
+    funcion = "borrar";
+    const elemento = $(this)[0].activeElement.parentElement.parentElement.parentElement.parentElement;
+    const id = $(elemento).attr('prodId');
+    const nombre = $(elemento).attr('prodNombre');
+    const avatar = $(elemento).attr('prodAvatar');
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger mr-1'
+        },
+        buttonsStyling: false
+    })
+    swalWithBootstrapButtons.fire({
+        title: 'Desea Eliminar?',
+        text: "No podras revertir esto!",
+        imageUrl:''+avatar+'',
+        imageWidth: 100,
+        imageHeight: 100,
+        showCancelButton: true,
+        confirmButtonText: 'Si, borra esto',
+        cancelButtonText: 'No, Cancelar!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post('../Controlador/ProductoController.php',{id,funcion},(response)=>{
+                edit==false;
+                if(response=='borrado'){
+                    swalWithBootstrapButtons.fire(
+                        'Borrado',
+                        'El producto '+nombre+' fue borrado :)',
+                        'success'
+                        )
+                        buscar_producto();
+                }
+                else{
+                    swalWithBootstrapButtons.fire(
+                        'No se pudo Borrar',
+                        'El producto '+nombre+'no fue borrado :)',
+                        'error'
+                        )
+                        
+                }
+          })   
+        } else if (result.dismiss === Swal.DismissReason.cancel ) {
+            swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'El producto '+nombre+' no fue borrado :)',
+            'error'
+            )
+        }
+      })
+    })
+  $('#form-crear-lote').submit(e=>{
+    let id_producto=$('#id_lote_prod').val();
+    let proveedor=$('#proveedor').val();
+    let stock=$('#stock').val();
+    let vencimiento=$('#vencimiento').val();
+    funcion = 'crear';
+    $.post('../Controlador/LoteController.php',{funcion,vencimiento,stock,proveedor,id_producto},(response)=>{
+        $('#add-lote').hide('slow');
+        $('#add-lote').show(1000);
+        $('#add-lote').hide(3000);
+        $('#form-crear-lote').trigger('reset');
+        buscar_producto();
+    });
+    e.preventDefault();
+  }); 
 })

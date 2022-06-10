@@ -69,9 +69,35 @@ class Producto{
 		$query=$this->acceso->prepare($sql);
 		$query->execute(array(':id'=>$id,':nombre'=>$nombre));
 	}
-
-
-
-}
+	function borrar($id){
+		$sql="DELETE FROM producto WHERE id_product=:id";
+		$query=$this->acceso->prepare($sql);
+		$query->execute(array(':id'=>$id));
+		if(!empty($query->execute(array(':id'=>$id)))){
+			echo 'borrado';
+		}
+		else{
+			echo 'noborrado';
+		}
+	}
+	function obtener_stock($id){
+		$sql="SELECT SUM(stock) as total FROM lote where lote_id_prod=:id";
+		$query=$this->acceso->prepare($sql);
+		$query->execute(array(':id'=>$id));
+		$this->objetos=$query->fetchall();
+		return $this->objetos;
+	}
+	function buscar_id($id){
+			$sql="SELECT id_product, producto.nombre as nombre, concentracion, adicional, precio, empresa.nombre as empresa, tipo_producto.nombre as tipo, presentacion.nombre as presentacion, producto.avatar as avatar, prod_emp,prod_tip_prod,prod_present
+            FROM producto 
+            JOIN empresa on prod_emp=id_empresa
+            JOIN tipo_producto on prod_tip_prod=id_tip_prod
+            JOIN presentacion on prod_present=id_presentacion WHERE id_product=:id";
+			$query= $this->acceso->prepare($sql);
+			$query->execute(array(':id'=>$id));
+			$this->objetos=$query->fetchall();
+			return $this->objetos;
+		}
+	}
 
 ?>
